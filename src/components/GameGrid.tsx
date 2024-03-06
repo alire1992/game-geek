@@ -1,9 +1,9 @@
 import { Text, SimpleGrid } from "@chakra-ui/react";
 import { useGames } from "../hooks/useGames";
+import GameCard from "./GameCard";
 
 export default function GameGrid() {
   const { games, error } = useGames();
-
   return (
     <>
       {error && <Text>{error}</Text>}
@@ -18,7 +18,7 @@ export default function GameGrid() {
         spacing={10}
       >
         {games.map((game) => (
-          <li key={game.id}>{game.name}</li>
+          <GameCard game={game} key={game.id} />
         ))}
       </SimpleGrid>
     </>

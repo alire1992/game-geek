@@ -5,9 +5,8 @@ import GameCardSkeleton from "./GameCardSkeleton";
 import GameCardContainer from "./GameCardContainer";
 
 export default function GameGrid() {
-  const { games, error, isLoading } = useGames();
+  const { data: games, error, isLoading } = useGames();
   const skeletons = Array.from(new Array(10), (_, i) => i + 1);
-  console.log(skeletons);
   return (
     <>
       {error && <Text>{error}</Text>}

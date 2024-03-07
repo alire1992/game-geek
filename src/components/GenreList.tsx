@@ -1,7 +1,7 @@
 import { useGenres } from "../hooks/useGeneres";
 
 export default function GenreList() {
-  const { genres, isLoading, error } = useGenres();
+  const { data: genres } = useGenres();
 
   return (
     <ul>

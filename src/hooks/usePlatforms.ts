@@ -4,17 +4,17 @@ import ms from "ms";
 import { FetchApiResponse } from "../services/apiClient";
 import APIClient from "../services/apiClient";
 
-export interface Platforms {
+export interface Platform {
   id: number;
   name: string;
   slug: string;
 }
 
 export function usePlatforms() {
-  const apiClient = new APIClient<Platforms>("/platforms/lists/parents");
+  const apiClient = new APIClient<Platform>("/platforms/lists/parents");
 
   const { data, isLoading, error } = useQuery<
-    FetchApiResponse<Platforms>,
+    FetchApiResponse<Platform>,
     Error
   >({
     queryKey: ["platforms"],

@@ -1,4 +1,4 @@
-import { Text, SimpleGrid } from "@chakra-ui/react";
+import { Text, SimpleGrid, Spinner } from "@chakra-ui/react";
 
 import GameCard from "./GameCard";
 import GameCardSkeleton from "./GameCardSkeleton";
@@ -7,40 +7,56 @@ import GameCardContainer from "./GameCardContainer";
 import { useGames } from "../hooks/useGames";
 
 import { GameQuery } from "../App";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 interface Props {
   gameQuery: GameQuery;
 }
 
 export default function GameGrid({ gameQuery }: Props) {
-  const { data, error, isLoading } = useGames(gameQuery);
+  const { data, error, isFetching, hasNextPage, fetchNextPage } =
+    useGames(gameQuery);
   const skeletons = Array.from(new Array(10), (_, i) => i + 1);
 
   if (error) return <Text>{error.message}</Text>;
+  const totalFetchedGame =
+    data?.pages.reduce((acc, page) => (acc += page.results.length), 0) || 0;
 
   return (
-    <SimpleGrid
-      columns={{
-        sm: 1,
-        md: 2,
-        lg: 3,
-        xl: 4,
-      }}
-      padding="10px"
-      spacing={6}
+    <InfiniteScroll
+      dataLength={totalFetchedGame}
+      hasMore={!!hasNextPage}
+      loader={<Spinner />}
+      next={() => fetchNextPage()}
     >
-      {isLoading &&
-        skeletons.map((skeleton) => (
-          <GameCardContainer key={skeleton}>
-            {" "}
-            <GameCardSkeleton />
-          </GameCardContainer>
+      <SimpleGrid
+        columns={{
+          sm: 1,
+          md: 2,
+          lg: 3,
+          xl: 4,
+        }}
+        padding="10px"
+        spacing={6}
+      >
+        {data?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page?.results.map((game) => (
+              <GameCardContainer key={game.id}>
+                <GameCard game={game} />
+              </GameCardContainer>
+            ))}
+          </React.Fragment>
         ))}
-      {data?.results.map((game) => (
-        <GameCardContainer key={game.id}>
-          <GameCard game={game} />
-        </GameCardContainer>
-      ))}
-    </SimpleGrid>
+        {isFetching &&
+          skeletons.map((skeleton) => (
+            <GameCardContainer key={skeleton}>
+              {" "}
+              <GameCardSkeleton />
+            </GameCardContainer>
+          ))}
+      </SimpleGrid>
+    </InfiniteScroll>
   );
 }

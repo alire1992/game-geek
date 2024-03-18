@@ -12,10 +12,10 @@ import GenreItemSkeleton from "./GenreItemSkeleton";
 
 interface Props {
   onSelectGenre: (genre: Genre) => void;
-  selectedGenre: Genre | null;
+  selectedGenreId?: number;
 }
 
-export default function GenreList({ selectedGenre, onSelectGenre }: Props) {
+export default function GenreList({ selectedGenreId, onSelectGenre }: Props) {
   const { data, isLoading, error } = useGenres();
 
   const skletons = Array.from(new Array(10), (_, i) => i);
@@ -47,7 +47,7 @@ export default function GenreList({ selectedGenre, onSelectGenre }: Props) {
                 onClick={() => onSelectGenre(genre)}
                 variant="link"
                 fontSize="lg"
-                fontWeight={genre.id === selectedGenre?.id ? "bold" : "normal"}
+                fontWeight={genre.id === selectedGenreId ? "bold" : "normal"}
                 whiteSpace="normal"
                 textAlign="left"
               >

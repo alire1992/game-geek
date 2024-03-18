@@ -10,16 +10,12 @@ export interface Genre {
 }
 
 export function useGenres() {
-  const {
-    data: genres,
-    isLoading,
-    error,
-  } = useQuery<FetchApiResponse<Genre>, Error>({
+  const { data, isLoading, error } = useQuery<FetchApiResponse<Genre>, Error>({
     queryKey: ["genres"],
     queryFn: () =>
       apiClient<FetchApiResponse<Genre>>("genres").then((res) => res.data),
     staleTime: ms("24h"),
   });
 
-  return { genres, error, isLoading };
+  return { data, error, isLoading };
 }

@@ -16,7 +16,7 @@ interface Props {
 }
 
 export default function GenreList({ selectedGenre, onSelectGenre }: Props) {
-  const { genres, isLoading, error } = useGenres();
+  const { data, isLoading, error } = useGenres();
 
   const skletons = Array.from(new Array(10), (_, i) => i);
 
@@ -34,7 +34,7 @@ export default function GenreList({ selectedGenre, onSelectGenre }: Props) {
               <GenreItemSkeleton />
             </ListItem>
           ))}
-        {genres?.results.map((genre) => (
+        {data?.results.map((genre) => (
           <ListItem key={genre.id} paddingY="5px">
             <HStack>
               <Image

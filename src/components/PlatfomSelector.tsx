@@ -12,15 +12,15 @@ export default function PlatfomSelector({
   onSelectPlatform,
   selectedPlatform,
 }: Props) {
-  const { data: platforms, error } = usePlatforms();
-  if (error.length) return null;
+  const { data, error } = usePlatforms();
+  if (error) return null;
   return (
     <Menu>
       <MenuButton as={Button} rightIcon={<BsChevronDown />}>
         {selectedPlatform?.name ?? "Platforms"}
       </MenuButton>
       <MenuList>
-        {platforms.map((platform) => (
+        {data?.results.map((platform) => (
           <MenuItem
             key={platform.id}
             onClick={() => onSelectPlatform(platform)}

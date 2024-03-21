@@ -8,15 +8,8 @@ import GameCardContainer from "./GameCardContainer";
 
 import { useGames } from "../hooks/useGames";
 
-import { GameQuery } from "../App";
-
-interface Props {
-  gameQuery: GameQuery;
-}
-
-export default function GameGrid({ gameQuery }: Props) {
-  const { data, error, isFetching, hasNextPage, fetchNextPage } =
-    useGames(gameQuery);
+export default function GameGrid() {
+  const { data, error, isFetching, hasNextPage, fetchNextPage } = useGames();
   const skeletons = Array.from(new Array(10), (_, i) => i + 1);
 
   if (error) return <Text>{error.message}</Text>;

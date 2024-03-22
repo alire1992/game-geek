@@ -3,12 +3,7 @@ import ms from "ms";
 
 import { FetchApiResponse } from "../services/apiClient";
 import APIClient from "../services/apiClient";
-
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
+import Platform from "../entities/Platform";
 
 export function usePlatforms() {
   const apiClient = new APIClient<Platform>("/platforms/lists/parents");

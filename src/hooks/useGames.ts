@@ -4,20 +4,7 @@ import ms from "ms";
 import { FetchApiResponse } from "../services/apiClient";
 import APIClient from "../services/apiClient";
 import { useGameQueryStore } from "../store";
-
-export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
-}
-export interface Game {
-  id: number;
-  name: string;
-  background_image: string;
-  parent_platforms: { platform: Platform }[];
-  metacritic: number;
-  rating_top: number;
-}
+import Game from "../entities/Game";
 
 export function useGames() {
   const apiClient = new APIClient<Game>("/games");
